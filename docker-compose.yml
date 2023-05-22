@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: Password1234
+        MSSQL_PID: Express
+    ports:
+      - "1436:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+
+  jmeterclidemo:
+    image: ${DOCKER_REGISTRY-}jmeterclidemo
+    build:
+      context: .
+      dockerfile: JmeterCLIDemo/Dockerfile
+    ports:
+      - "5001:80"
+      - "5000:443"
+
+  jmeter:
+    image: justb4/jmeter:latest 
+    volumes: 
+    - ./test-scripts:/jmeter/test-scripts
+    - ./results:/jmeter/results
+
+    entrypoint: ["sh", "-c","jmeter -n -t \"/jmeter/test-scripts/TestFileDelete.jmx\" -l /jmeter/results/resultsDelete.jtl -f -Jusers=1 -Jrampup=1 -Jendpoint=\"https://jmeterclidemo:443/DeleteByTownCode/823942\" -JhttpMethod=\"DELETE\" -Jresponsetime=3000 -Jloop=100"]
+
+    depends_on: 
+    - jmeterclidemo

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JmeterCLIDemo", "JmeterCLIDemo\JmeterCLIDemo.csproj", "{83D209D9-6491-4291-B9BA-C52BB51543E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JmeterCLIDemo", "JmeterCLIDemo\JmeterCLIDemo.csproj", "{83D209D9-6491-4291-B9BA-C52BB51543E4}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{92348450-22C7-4FF6-A0BC-B5D787D59DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{83D209D9-6491-4291-B9BA-C52BB51543E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D209D9-6491-4291-B9BA-C52BB51543E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D209D9-6491-4291-B9BA-C52BB51543E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92348450-22C7-4FF6-A0BC-B5D787D59DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92348450-22C7-4FF6-A0BC-B5D787D59DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92348450-22C7-4FF6-A0BC-B5D787D59DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92348450-22C7-4FF6-A0BC-B5D787D59DBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
