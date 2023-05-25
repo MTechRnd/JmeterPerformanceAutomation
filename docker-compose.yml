@@ -30,9 +30,8 @@ services:
     volumes: 
     - ./test-scripts:/jmeter/test-scripts
     - ./results:/jmeter/results
+
     entrypoint: ["sh", "-c","/jmeter/test-scripts/commandscript.sh"]
-    #entrypoint: ["sh", "-c","jmeter -n -t \"/jmeter/test-scripts/TestFileGet.jmx\" -l /jmeter/results/resultsGet1234.jtl -f -Jusers=1 -Jrampup=1 -Jendpoint=\"https://jmeterclidemo:443/Get\" -JhttpMethod=\"GET\" -Jresponsetime=8000"]
-    #entrypoint: /jmeter/test-scripts/commandscript.sh
 
     depends_on: 
     - jmeterclidemo
