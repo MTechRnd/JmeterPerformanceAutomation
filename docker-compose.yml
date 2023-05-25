@@ -1,18 +1,6 @@
 version: '3.4'
 
 services:
-  ms-sql-server:
-    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
-    environment:
-        ACCEPT_EULA: "Y"
-        MSSQL_SA_PASSWORD: Password1234
-        MSSQL_PID: Express
-    ports:
-      - "1436:1433"
-    volumes:
-      - ./data:/var/opt/mssql/data
-      - ./log:/var/opt/mssql/log
-
   jmeterclidemo:
     image: ${DOCKER_REGISTRY-}jmeterclidemo
     build:
@@ -21,14 +9,31 @@ services:
     ports:
       - "5001:80"
       - "5000:443"
+   
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    env_file: secrets.env
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: ${DBPassword}
+        MSSQL_PID: Express
+    ports:
+      - "1436:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+    depends_on:
+    - jmeterclidemo
 
   jmeter:
-    image: justb4/jmeter:latest 
+    image: justb4/jmeter:latest
     volumes: 
     - ./test-scripts:/jmeter/test-scripts
     - ./results:/jmeter/results
-
-    entrypoint: ["sh", "-c","jmeter -n -t \"/jmeter/test-scripts/TestFileDelete.jmx\" -l /jmeter/results/resultsDelete.jtl -f -Jusers=1 -Jrampup=1 -Jendpoint=\"https://jmeterclidemo:443/DeleteByTownCode/823942\" -JhttpMethod=\"DELETE\" -Jresponsetime=3000 -Jloop=100"]
+    entrypoint: ["sh", "-c","/jmeter/test-scripts/commandscript.sh"]
+    #entrypoint: ["sh", "-c","jmeter -n -t \"/jmeter/test-scripts/TestFileGet.jmx\" -l /jmeter/results/resultsGet1234.jtl -f -Jusers=1 -Jrampup=1 -Jendpoint=\"https://jmeterclidemo:443/Get\" -JhttpMethod=\"GET\" -Jresponsetime=8000"]
+    #entrypoint: /jmeter/test-scripts/commandscript.sh
 
     depends_on: 
     - jmeterclidemo
+    - ms-sql-server

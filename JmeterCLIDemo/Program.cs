@@ -1,10 +1,8 @@
 using JmeterCLIDemo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,11 +12,11 @@ var config = builder.Configuration;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContext<GujaratCityDBContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+//builder.Services.AddDbContext<GujaratCityDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 var DBConf = builder.Configuration.GetSection("DBConfiguration");
 builder.Services.AddDbContext<GujaratCityDBContext>(options => options.UseSqlServer(
-    $"Server={DBConf["DBServer"]},{DBConf["port"]};Initial Catalog={DBConf["Database"]};User ID = {DBConf["DBUser"]};Password= {DBConf["DBPassword"]};TrustServerCertificate=true;"));
+    $"Server={DBConf["DBServer"]},{DBConf["port"]};Initial Catalog={DBConf["Database"]};User ID = {DBConf["DBUser"]};Password= {config["DBPassword"]};TrustServerCertificate=true;"));
 
 builder.Services.AddAuthentication(x =>
 {
@@ -31,11 +29,12 @@ builder.Services.AddAuthentication(x =>
     {
         ValidIssuer = config["JwtSettings:Issuer"],
         ValidAudience = config["JwtSettings:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Key"])),
         ValidateIssuer = true,
         ValidateAudience= true,
-        ValidateLifetime = false,
-        ValidateIssuerSigningKey = true
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew=TimeSpan.Zero
     };
 });
 builder.Services.AddAuthorization();
@@ -59,7 +58,7 @@ app.MapGet("/GetToken", (string password) =>
     {
         var issuer = config["JwtSettings:Issuer"];
         var audience = config["JwtSettings:Audience"];
-        var key = Encoding.UTF8.GetBytes(config["JwtSettings:Key"]);
+        var key = Encoding.UTF8.GetBytes(config["Key"]);
         var tokenDiscriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
@@ -69,7 +68,7 @@ app.MapGet("/GetToken", (string password) =>
             new Claim(JwtRegisteredClaimNames.Email, "amit.limbasiya@marutitech.com"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         }),
-            Expires = DateTime.UtcNow.AddHours(100),
+            Expires = DateTime.UtcNow.AddYears(1),
             Issuer = issuer,
             Audience = audience,
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
@@ -85,24 +84,27 @@ app.MapGet("/GetToken", (string password) =>
 
 app.MapGet("/Get", async (GujaratCityDBContext _dbcontext) =>
 {
-    return await _dbcontext.Districts.ToListAsync();
+    Console.WriteLine("Hello");
+    var result = await _dbcontext.GujaratDistricts.ToListAsync();
+    Console.WriteLine(result);
+    return result;
 }).RequireAuthorization();
 
-app.MapGet("/Get/{id}", async (GujaratCityDBContext _dbcontext,int id) =>
+app.MapGet("/Get/{id}", async (GujaratCityDBContext _dbcontext,Guid id) =>
 {
-    
-    return await _dbcontext.Districts.FindAsync(id);
+    return await _dbcontext.GujaratDistricts.FindAsync(id);
 }).RequireAuthorization();
 
 app.MapPost("/Post", async([FromBody]District district,GujaratCityDBContext _dbcontext) =>
 {
-    await _dbcontext.Districts.AddAsync(district);
+    await _dbcontext.GujaratDistricts.AddAsync(district);
     await _dbcontext.SaveChangesAsync();
-});
+}).RequireAuthorization();
 
-app.MapPut("/Put/{id}", async ([FromBody] District district,int id, GujaratCityDBContext _dbcontext) =>
+//
+app.MapPut("/Put/{id}", async ([FromBody] District district,Guid id, GujaratCityDBContext _dbcontext) =>
 { 
-    var dist = await _dbcontext.Districts.FindAsync(id);
+    var dist = await _dbcontext.GujaratDistricts.FindAsync(id);
     if(dist==null) return null;
 
     dist.STCode= district.STCode;
@@ -116,11 +118,12 @@ app.MapPut("/Put/{id}", async ([FromBody] District district,int id, GujaratCityD
 
     await _dbcontext.SaveChangesAsync();
     return dist;
-});
+}).RequireAuthorization();
+
 app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, int townCode, GujaratCityDBContext _dbcontext) =>
 {
     Console.WriteLine("Hello put");
-    var dist = await _dbcontext.Districts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
+    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
     if(dist==null) return Results.NotFound();
     dist.STCode = district.STCode;
     dist.StateName = district.StateName;
@@ -134,28 +137,29 @@ app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, 
     await _dbcontext.SaveChangesAsync();
     
     return Results.Ok();
-});
+}).RequireAuthorization();
 
-app.MapDelete("/Delete/{id}", async (GujaratCityDBContext _dbcontext,int id) =>
+app.MapDelete("/Delete/{id}", async (GujaratCityDBContext _dbcontext,Guid id) =>
 {
-    var dist = await _dbcontext.Districts.FindAsync(id);
+    var dist = await _dbcontext.GujaratDistricts.FindAsync(id);
     if (dist == null)
         return Results.NotFound("City not found.");
-    _dbcontext.Districts.Remove(dist);
+    _dbcontext.GujaratDistricts.Remove(dist);
+    await _dbcontext.SaveChangesAsync();
     return Results.Ok();
 
-});
+}).RequireAuthorization();
 
 app.MapDelete("/DeleteByTownCode/{townCode}", async (GujaratCityDBContext _dbcontext, int townCode) =>
 {
     Console.WriteLine("Hello delete");
-    var dist = await _dbcontext.Districts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
+    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
     if (dist == null)
         return Results.NotFound();
-    _dbcontext.Districts.Remove(dist);
+    _dbcontext.GujaratDistricts.Remove(dist);
     await _dbcontext.SaveChangesAsync();
     return Results.Ok();
-});
+}).RequireAuthorization();
 
 
 app.Run();

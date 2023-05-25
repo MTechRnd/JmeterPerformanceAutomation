@@ -8,11 +8,13 @@ namespace JmeterCLIDemo
         {
         }
 
-        public DbSet<District> Districts { get; set; }
+        public DbSet<District> GujaratDistricts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<District>().Property(o=>o.ID).HasDefaultValueSql("NEWSEQUENTIALID()").IsRequired();
         }
     }
 }
