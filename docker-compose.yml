@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  jmeterclidemo:
+    image: ${DOCKER_REGISTRY-}jmeterclidemo
+    build:
+      context: .
+      dockerfile: JmeterCLIDemo/Dockerfile
+    ports:
+      - "5001:80"
+      - "5000:443"
+   
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    env_file: secrets.env
+    environment:
+        ACCEPT_EULA: "Y"
+        MSSQL_SA_PASSWORD: ${DBPassword}
+        MSSQL_PID: Express
+    ports:
+      - "1436:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+    depends_on:
+    - jmeterclidemo
+
+  jmeter:
+    image: justb4/jmeter:latest
+    volumes: 
+    - ./test-scripts:/jmeter/test-scripts
+    - ./results:/jmeter/results
+
+    entrypoint: ["sh", "-c","/jmeter/test-scripts/commandscript.sh"]
+
+    depends_on: 
+    - jmeterclidemo
+    - ms-sql-server

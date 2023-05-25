@@ -9,7 +9,7 @@ namespace JmeterCLIDemo
     {
         [Key]
         [DataMember(Name ="ID")]
-        public int ID { get; set; }
+        public Guid ID { get; set; } 
 
         [Required]
         [DataMember(Name ="STCode")]
