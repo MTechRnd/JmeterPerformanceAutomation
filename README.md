@@ -4,11 +4,11 @@ The database holds the location data of gujarat state and the latest and officia
 justb4/jmeter is the unofficial image used to test the API. this is the image which contains .sh file by the help of that file we can run the command.  
 
 ### Docker-compose up command:
-- docker-compose --env-file secrets.env up  
+`docker-compose --env-file secrets.env up`  
 This should be the command to run the docker containers. Here the credentials are come from the secrets.env file so we have to specify it in the command.  
 
 ### The command for creating database and seeding data into it.
-##### dotnet ef database update --connection "Server=localhost,<port>;Initial Catalog=<databasename>;User ID=<username>;Password=<Password>;TrustServerCertificate=true"  
+`dotnet ef database update --connection "Server=localhost,<port>;Initial Catalog=<databasename>;User ID=<username>;Password=<Password>;TrustServerCertificate=true"`  
 - when the command is run, the migration files are already there in the migration folder, so it will apply those pending migration. So it will create the database and table.  
 - Also it will seed the data of gujarat state's district data containing 232 rows.  
 * port: this is the local machine port which is binded to the mssql server container. we have binded it to 1436.  
