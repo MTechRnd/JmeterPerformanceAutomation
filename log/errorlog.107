@@ -1,0 +1,73 @@
+2023-05-22 09:01:58.07 Server      Microsoft SQL Server 2019 (RTM) - 15.0.2000.5 (X64) 
+	Sep 24 2019 13:48:23 
+	Copyright (C) 2019 Microsoft Corporation
+	Express Edition (64-bit) on Linux (Ubuntu 16.04.6 LTS) <X64>
+2023-05-22 09:01:58.07 Server      UTC adjustment: 0:00
+2023-05-22 09:01:58.07 Server      (c) Microsoft Corporation.
+2023-05-22 09:01:58.07 Server      All rights reserved.
+2023-05-22 09:01:58.07 Server      Server process ID is 32.
+2023-05-22 09:01:58.07 Server      Logging SQL Server messages in file '/var/opt/mssql/log/errorlog'.
+2023-05-22 09:01:58.07 Server      Registry startup parameters: 
+	 -d /var/opt/mssql/data/master.mdf
+	 -l /var/opt/mssql/data/mastlog.ldf
+	 -e /var/opt/mssql/log/errorlog
+2023-05-22 09:01:58.09 Server      SQL Server detected 1 sockets with 6 cores per socket and 12 logical processors per socket, 12 total logical processors; using 8 logical processors based on SQL Server licensing. This is an informational message; no user action is required.
+2023-05-22 09:01:58.09 Server      SQL Server is starting at normal priority base (=7). This is an informational message only. No user action is required.
+2023-05-22 09:01:58.09 Server      Detected 6243 MB of RAM. This is an informational message; no user action is required.
+2023-05-22 09:01:58.10 Server      Using conventional memory in the memory manager.
+2023-05-22 09:01:58.10 Server      Page exclusion bitmap is enabled.
+2023-05-22 09:01:58.14 Server      Buffer pool extension is not supported on Linux platform.
+2023-05-22 09:01:58.14 Server      Buffer Pool: Allocating 1048576 bytes for 849273 hashPages.
+2023-05-22 09:01:58.25 Server      Buffer pool extension is already disabled. No action is necessary.
+2023-05-22 09:01:58.41 Server      Successfully initialized the TLS configuration. Allowed TLS protocol versions are ['1.0 1.1 1.2']. Allowed TLS ciphers are ['ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-ECDSA-AES128-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:!DHE-RSA-AES256-GCM-SHA384:!DHE-RSA-AES128-GCM-SHA256:!DHE-RSA-AES256-SHA:!DHE-RSA-AES128-SHA'].
+2023-05-22 09:01:58.43 Server      Query Store settings initialized with enabled = 1, 
+2023-05-22 09:01:58.45 Server      The maximum number of dedicated administrator connections for this instance is '1'
+2023-05-22 09:01:58.45 Server      Node configuration: node 0: CPU mask: 0x00000000000000ff:0 Active CPU mask: 0x00000000000000ff:0. This message provides a description of the NUMA configuration for this computer. This is an informational message only. No user action is required.
+2023-05-22 09:01:58.46 Server      Using dynamic lock allocation.  Initial allocation of 2500 Lock blocks and 5000 Lock Owner blocks per node.  This is an informational message only.  No user action is required.
+2023-05-22 09:01:58.47 Server      In-Memory OLTP initialized on lowend machine.
+2023-05-22 09:01:58.59 Server      CLR version v4.0.30319 loaded.
+2023-05-22 09:01:58.84 Server      Common language runtime (CLR) functionality initialized.
+2023-05-22 09:01:58.87 Server      [INFO] Created Extended Events session 'hkenginexesession'
+
+2023-05-22 09:01:58.88 Server      Database Instant File Initialization: enabled. For security and performance considerations see the topic 'Database Instant File Initialization' in SQL Server Books Online. This is an informational message only. No user action is required.
+2023-05-22 09:01:58.88 Server      Total Log Writer threads: 2. This is an informational message; no user action is required.
+2023-05-22 09:01:58.88 Server      clwb is selected for pmem flush operation.
+2023-05-22 09:01:58.88 Server      Software Usage Metrics is disabled.
+2023-05-22 09:01:58.89 spid9s      [1]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2023-05-22 09:01:58.89 spid9s      Starting up database 'master'.
+2023-05-22 09:01:59.60 Server      Failed to verify the Authenticode signature of 'C:\binn\msoledbsql.dll'. Signature verification of SQL Server DLLs will be skipped. Genuine copies of SQL Server are signed. Failure to verify the Authenticode signature might indicate that this is not an authentic release of SQL Server. Install a genuine copy of SQL Server or contact customer support.
+2023-05-22 09:01:59.87 spid9s      Service Master Key could not be decrypted using one of its encryptions. See sys.key_encryptions for details.
+2023-05-22 09:01:59.87 spid9s      An error occurred during Service Master Key initialization. SQLErrorCode=33095, State=8, LastOsError=0.
+2023-05-22 09:01:59.88 spid9s      SQL Server Audit is starting the audits. This is an informational message. No user action is required.
+2023-05-22 09:01:59.89 spid9s      SQL Server Audit has started the audits. This is an informational message. No user action is required.
+2023-05-22 09:02:00.12 spid9s      SQL Trace ID 1 was started by login "sa".
+2023-05-22 09:02:00.13 spid9s      Server name is 'ace5083bff24'. This is an informational message only. No user action is required.
+2023-05-22 09:02:00.15 spid27s     Always On: The availability replica manager is starting. This is an informational message only. No user action is required.
+2023-05-22 09:02:00.15 spid27s     Always On: The availability replica manager is waiting for the instance of SQL Server to allow client connections. This is an informational message only. No user action is required.
+2023-05-22 09:02:00.15 spid9s      [4]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2023-05-22 09:02:00.15 spid12s     [32767]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2023-05-22 09:02:00.16 spid9s      Starting up database 'msdb'.
+2023-05-22 09:02:00.16 spid12s     Starting up database 'mssqlsystemresource'.
+2023-05-22 09:02:00.16 spid12s     The resource database build version is 15.00.2000. This is an informational message only. No user action is required.
+2023-05-22 09:02:00.18 spid26s     A self-generated certificate was successfully loaded for encryption.
+2023-05-22 09:02:00.18 spid26s     Server is listening on [ 'any' <ipv6> 1433].
+2023-05-22 09:02:00.18 spid26s     Server is listening on [ 'any' <ipv4> 1433].
+2023-05-22 09:02:00.18 spid26s     Dedicated administrator connection support was not started because it is disabled on this edition of SQL Server. If you want to use a dedicated administrator connection, restart SQL Server using the trace flag 7806. This is an informational message only. No user action is required.
+2023-05-22 09:02:00.18 spid12s     [3]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2023-05-22 09:02:00.19 spid12s     Starting up database 'model'.
+2023-05-22 09:02:00.19 spid26s     Error: 39002, Severity: 16, State: 1.
+2023-05-22 09:02:00.19 spid26s     SQL failed to boot extensibility for error code 0x80070005.
+2023-05-22 09:02:00.19 spid26s     InitializeXdbPkgLauncher failed. ErrorCode: 0x80004005.
+2023-05-22 09:02:00.19 spid26s     SQL Server is now ready for client connections. This is an informational message; no user action is required.
+2023-05-22 09:02:01.07 spid12s     Clearing tempdb database.
+2023-05-22 09:02:02.79 spid12s     [2]. Feature Status: PVS: 0. CTR: 0. ConcurrentPFSUpdate: 1.
+2023-05-22 09:02:02.79 spid12s     Starting up database 'tempdb'.
+2023-05-22 09:02:03.55 spid18s     The Service Broker endpoint is in disabled or stopped state.
+2023-05-22 09:02:03.55 spid18s     The Database Mirroring endpoint is in disabled or stopped state.
+2023-05-22 09:02:03.56 spid18s     Service Broker manager has started.
+2023-05-22 09:02:03.56 spid9s      Recovery is complete. This is an informational message only. No user action is required.
+2023-05-22 09:03:22.30 spid9s      Always On: The availability replica manager is going offline because SQL Server is shutting down. This is an informational message only. No user action is required.
+2023-05-22 09:03:22.30 spid9s      SQL Server is terminating in response to a 'stop' request from Service Control Manager. This is an informational message only. No user action is required.
+2023-05-22 09:03:22.41 spid18s     Service Broker manager has shut down.
+2023-05-22 09:03:22.41 spid9s      .NET Framework runtime has been stopped.
+2023-05-22 09:03:22.45 spid9s      SQL Trace was stopped due to server shutdown. Trace ID = '1'. This is an informational message only; no user action is required.
