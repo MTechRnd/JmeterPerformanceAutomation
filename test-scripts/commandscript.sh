@@ -1,6 +1,0 @@
-﻿#!/bin/bash
-jmeter -n -t /jmeter/test-scripts/TestFileGet.jmx -l /jmeter/results/resultsGetByID.jtl -f -Jusers=100 -Jrampup=1 -Jendpoint=https://jmeterclidemo:443/Get/47EE423E-F36B-1410-8E9B-00971AF2703F -JhttpMethod=GET -Jresponsetime=6000
-jmeter -n -t /jmeter/test-scripts/TestFileGet.jmx -l /jmeter/results/resultsGetAllData.jtl -f -Jusers=100 -Jrampup=1 -Jendpoint=https://jmeterclidemo:443/Get -JhttpMethod=GET -Jresponsetime=800
-jmeter -n -t /jmeter/test-scripts/TestFilePOSTorPUT.jmx -l /jmeter/results/resultsPost.jtl -f -Jusers=100 -Jrampup=1 -Jendpoint=https://jmeterclidemo:443/Post -JhttpMethod=POST -Jresponsetime=500
-jmeter -n -t /jmeter/test-scripts/TestFilePut.jmx -l /jmeter/results/resultsPut.jtl -f -Jusers=100 -Jrampup=1 -Jendpoint=https://jmeterclidemo:443/UpdateByTownCode/823942 -JhttpMethod=PUT -Jresponsetime=500  -Jstartupdelay=1 -Jduration=100
-jmeter -n -t /jmeter/test-scripts/TestFileDelete.jmx -l /jmeter/results/resultsDelete.jtl -f -Jusers=1 -Jrampup=1 -Jendpoint=https://jmeterclidemo:443/DeleteByTownCode/823942 -JhttpMethod=DELETE -Jresponsetime=7 -Jloop=100

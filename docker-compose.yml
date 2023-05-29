@@ -31,7 +31,7 @@ services:
     - ./test-scripts:/jmeter/test-scripts
     - ./results:/jmeter/results
 
-    entrypoint: ["sh", "-c","/jmeter/test-scripts/commandscript.sh"]
+    entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
 
     depends_on: 
     - jmeterclidemo
