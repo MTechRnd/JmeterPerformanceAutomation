@@ -83,11 +83,8 @@ app.MapGet("/GetToken", (string password) =>
 });
 
 app.MapGet("/Get", async (GujaratCityDBContext _dbcontext) =>
-{
-    Console.WriteLine("Hello");
-    var result = await _dbcontext.GujaratDistricts.ToListAsync();
-    Console.WriteLine(result);
-    return result;
+{  
+    return await _dbcontext.GujaratDistricts.ToListAsync();
 }).RequireAuthorization();
 
 app.MapGet("/Get/{id}", async (GujaratCityDBContext _dbcontext,Guid id) =>
@@ -101,29 +98,11 @@ app.MapPost("/Post", async([FromBody]District district,GujaratCityDBContext _dbc
     await _dbcontext.SaveChangesAsync();
 }).RequireAuthorization();
 
-//
-app.MapPut("/Put/{id}", async ([FromBody] District district,Guid id, GujaratCityDBContext _dbcontext) =>
-{ 
-    var dist = await _dbcontext.GujaratDistricts.FindAsync(id);
-    if(dist==null) return null;
-
-    dist.STCode= district.STCode;
-    dist.StateName = district.StateName;
-    dist.DTCode= district.DTCode;
-    dist.DistrictName = district.DistrictName;
-    dist.SDTCode = district.SDTCode;
-    dist.SubDistrictName = district.SubDistrictName;
-    dist.TownCode= district.TownCode;
-    dist.AreaName = district.AreaName;
-
-    await _dbcontext.SaveChangesAsync();
-    return dist;
-}).RequireAuthorization();
 
 app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, int townCode, GujaratCityDBContext _dbcontext) =>
 {
     Console.WriteLine("Hello put");
-    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
+    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode && record.AreaName!=district.AreaName).FirstOrDefaultAsync();
     if(dist==null) return Results.NotFound();
     dist.STCode = district.STCode;
     dist.StateName = district.StateName;
@@ -138,28 +117,5 @@ app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, 
     
     return Results.Ok();
 }).RequireAuthorization();
-
-app.MapDelete("/Delete/{id}", async (GujaratCityDBContext _dbcontext,Guid id) =>
-{
-    var dist = await _dbcontext.GujaratDistricts.FindAsync(id);
-    if (dist == null)
-        return Results.NotFound("City not found.");
-    _dbcontext.GujaratDistricts.Remove(dist);
-    await _dbcontext.SaveChangesAsync();
-    return Results.Ok();
-
-}).RequireAuthorization();
-
-app.MapDelete("/DeleteByTownCode/{townCode}", async (GujaratCityDBContext _dbcontext, int townCode) =>
-{
-    Console.WriteLine("Hello delete");
-    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode).FirstOrDefaultAsync();
-    if (dist == null)
-        return Results.NotFound();
-    _dbcontext.GujaratDistricts.Remove(dist);
-    await _dbcontext.SaveChangesAsync();
-    return Results.Ok();
-}).RequireAuthorization();
-
 
 app.Run();

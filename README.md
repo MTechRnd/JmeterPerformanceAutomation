@@ -17,11 +17,12 @@ This should be the command to run the docker containers. Here the credentials ar
 * Jusers : Represents the number of users/threads.
 * Jrampup : Represents the rampup time.
 * Jendpoint : Represents the endpoint of request.
-* JhttpMethod : Represents the http method.
+* Jhttpmethod : Represents the http method.
 * Jresponsetime : Represents the expected response time. It is the duration time for the duration assertion. If command takes more than the given Jresponsetime the assertion will fail and it will give error as 500 and response message as Time Limit Exceed. For all the below commands, default response time for duration assertion is 10 milliseconds. 
 * Jloop : Represents the loop count for the testing plan to execute.
 * Jstartupdelay : Represents the startup delay.
 * Jduration : Represents the duration for the thread execution.
+For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmeter-test-plan
 
 ### commandscript.sh file:
 This is the file containing all the commands to run when the jmeter container will run. As it is the shell script, it can containes multiple commands with multiple endpoints and multiple test file(.jmx file).  
