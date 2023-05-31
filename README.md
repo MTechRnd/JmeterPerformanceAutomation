@@ -13,6 +13,11 @@ This should be the command to run the docker containers. Here the credentials ar
 - Also it will seed the data of gujarat state's district data containing 232 rows.  
 * port: this is the local machine port which is binded to the mssql server container. we have binded it to 1436.  
 
+### Result and summary:
+- The result(.jtl file) and summary(.txt text file) for the perticular command execution is stored in the result folder.
+- Result file contains the information about each iteration of the command execution.
+- Summary file contains the summary of the whole execution command, like average, min, max elapsedtime of all iteration and the error rate.
+
 ### Options to configure the command for test:
 * Jusers : Represents the number of users/threads.
 * Jrampup : Represents the rampup time.
