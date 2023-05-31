@@ -22,6 +22,7 @@ This should be the command to run the docker containers. Here the credentials ar
 * Jloop : Represents the loop count for the testing plan to execute.
 * Jstartupdelay : Represents the startup delay.
 * Jduration : Represents the duration for the thread execution.
+* Jinputfile : Define the path of the input data csv file(used in the POST endpoint to define the payload data).
 For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmeter-test-plan
 
 ### commandscript.sh file:
