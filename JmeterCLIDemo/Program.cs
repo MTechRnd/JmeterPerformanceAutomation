@@ -118,4 +118,21 @@ app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, 
     return Results.Ok();
 }).RequireAuthorization();
 
+app.MapPut("/Put/{id}", async ([FromBody] District district, int id, GujaratCityDBContext _dbcontext) =>
+{
+    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode==id).FirstOrDefaultAsync();
+    if (dist == null) 
+        return Results.NotFound();
+    dist.STCode = district.STCode;
+    dist.StateName = district.StateName;
+    dist.DTCode = district.DTCode;
+    dist.DistrictName = district.DistrictName;
+    dist.SDTCode = district.SDTCode;
+    dist.SubDistrictName = district.SubDistrictName;
+    dist.TownCode = district.TownCode;
+    dist.AreaName = district.AreaName;
+    await _dbcontext.SaveChangesAsync();
+    return Results.Ok();
+}).RequireAuthorization();
+
 app.Run();
