@@ -1,7 +1,7 @@
 # JmeterPerformanceAutomation
-This is the Jmeter performance automation project. The project is dockerized and docker compose is written.   
-The database holds the location data of gujarat state and the latest and official mssql image is used to dockerized the database. And the data volume is bind mounted to get the data into the mssql table.  
-justb4/jmeter is the unofficial image used to test the API. this is the image which contains .sh file by the help of that file we can run the command.  
+- This is the Jmeter performance automation project. The project is dockerized and docker compose is written.   
+- The database holds the location data of gujarat state and the latest and official mssql image is used to dockerized the database. And the data volume is bind mounted to get the data into the mssql table.  
+- justb4/jmeter is the unofficial image used to test the API. this is the image which contains .sh file by the help of that file we can run the command.  
 
 ### Docker-compose up command:
 `docker-compose --env-file secrets.env up`  
@@ -27,18 +27,18 @@ This should be the command to run the docker containers. Here the credentials ar
 * Jloop : Represents the loop count for the testing plan to execute.
 * Jstartupdelay : Represents the startup delay.
 * Jduration : Represents the duration for the thread execution.
-* Jinputfile : Define the path of the input data csv file(used in the POST endpoint to define the payload data).
+* Jinputfile : Define the path of the input data csv file(used in the POST endpoint to define the payload data).  
 For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmeter-test-plan
 
 ### commandscript.sh file:
-This is the file containing all the commands to run when the jmeter container will run. As it is the shell script, it can containes multiple commands with multiple endpoints and multiple test file(.jmx file).  
-You can append any command to this file to test any endpoint.  
+- This is the file containing all the commands to run when the jmeter container will run. As it is the shell script, it can containes multiple commands with multiple endpoints and multiple test file(.jmx file).  
+- You can append any command to this file to test any endpoint.  
 
 ### About JWT bearer:
-The code for Jwt token generation is there with the /GetToken endpoint. It is secured with password "Amit@123" for preventing it from misclick and unnecessary token generation.  
-When we request to this endpoint it will return us the token with all the configuration and the token expiry date is 1 year. which is set in the code.  
-Note: All the test files(.jmx files) are containing one token in the http header manager with authorization attribute. You can manually open the test file and change the authorization header value with new token.  
-Note: The authorization header value must be like Bearer <token-value>. i.e. Bearer<space><token-value>. If it is not, then it will give error as unauthorized.  
+- The code for Jwt token generation is there with the /GetToken endpoint. It is secured with password "Amit@123" for preventing it from misclick and unnecessary token generation.  
+- When we request to this endpoint it will return us the token with all the configuration and the token expiry date is 1 year. which is set in the code.  
+- Note: All the test files(.jmx files) are containing one token in the http header manager with authorization attribute. You can manually open the test file and change the authorization header value with new token.  
+- Note: The authorization header value must be like Bearer <token-value>. i.e. Bearer<space><token-value>. If it is not, then it will give error as unauthorized.  
 
 ## Tested command for examples
 ### Get By ID command:

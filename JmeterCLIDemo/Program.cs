@@ -12,7 +12,6 @@ var config = builder.Configuration;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContext<GujaratCityDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 var DBConf = builder.Configuration.GetSection("DBConfiguration");
 builder.Services.AddDbContext<GujaratCityDBContext>(options => options.UseSqlServer(
@@ -37,8 +36,8 @@ builder.Services.AddAuthentication(x =>
         ClockSkew=TimeSpan.Zero
     };
 });
-builder.Services.AddAuthorization();
 
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -46,9 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -82,26 +79,19 @@ app.MapGet("/GetToken", (string password) =>
     return Results.Unauthorized();
 });
 
-app.MapGet("/Get", async (GujaratCityDBContext _dbcontext) =>
-{  
-    return await _dbcontext.GujaratDistricts.ToListAsync();
-}).RequireAuthorization();
+app.MapGet("/Get", async (GujaratCityDBContext _dbcontext) => await _dbcontext.GujaratDistricts.ToListAsync()).RequireAuthorization();
 
-app.MapGet("/Get/{id}", async (GujaratCityDBContext _dbcontext,Guid id) =>
-{
-    return await _dbcontext.GujaratDistricts.FindAsync(id);
-}).RequireAuthorization();
+app.MapGet("/Get/{id}", async (GujaratCityDBContext _dbcontext,Guid id) => await _dbcontext.GujaratDistricts.FindAsync(id)).RequireAuthorization();
 
 app.MapPost("/Post", async([FromBody]District district,GujaratCityDBContext _dbcontext) =>
 {
     await _dbcontext.GujaratDistricts.AddAsync(district);
     await _dbcontext.SaveChangesAsync();
+    return Results.Ok();
 }).RequireAuthorization();
-
 
 app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, int townCode, GujaratCityDBContext _dbcontext) =>
 {
-    Console.WriteLine("Hello put");
     var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode == townCode && record.AreaName!=district.AreaName).FirstOrDefaultAsync();
     if(dist==null) return Results.NotFound();
     dist.STCode = district.STCode;
@@ -115,23 +105,6 @@ app.MapPut("/UpdateByTownCode/{townCode}", async ([FromBody] District district, 
 
     await _dbcontext.SaveChangesAsync();
     
-    return Results.Ok();
-}).RequireAuthorization();
-
-app.MapPut("/Put/{id}", async ([FromBody] District district, int id, GujaratCityDBContext _dbcontext) =>
-{
-    var dist = await _dbcontext.GujaratDistricts.Where(record => record.TownCode==id).FirstOrDefaultAsync();
-    if (dist == null) 
-        return Results.NotFound();
-    dist.STCode = district.STCode;
-    dist.StateName = district.StateName;
-    dist.DTCode = district.DTCode;
-    dist.DistrictName = district.DistrictName;
-    dist.SDTCode = district.SDTCode;
-    dist.SubDistrictName = district.SubDistrictName;
-    dist.TownCode = district.TownCode;
-    dist.AreaName = district.AreaName;
-    await _dbcontext.SaveChangesAsync();
     return Results.Ok();
 }).RequireAuthorization();
 
