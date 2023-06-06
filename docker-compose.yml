@@ -30,9 +30,16 @@ services:
     build:
       context: .
       dockerfile: JmeterImage/Dockerfile
-    volumes: 
-    - ./test-scripts:/jmeter/test-scripts
-    - ./results:/jmeter/results
+    secrets:
+      - aws_credentials
+
+secrets:
+  aws_credentials:
+    file: aws_credentials.txt
+
+    #volumes: 
+    #- ./test-scripts:/jmeter/test-scripts
+    #- ./results:/jmeter/results
     #entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
   #jmeter:
   #  image: justb4/jmeter:latest
