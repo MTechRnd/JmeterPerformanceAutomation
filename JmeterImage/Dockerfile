@@ -10,8 +10,7 @@
 FROM amazon/aws-cli AS aws-download
 RUN mkdir -p /app/test-scripts
 WORKDIR /app/test-scripts
-ENV AWS_ACCESS_KEY_ID=AKIA6E3O5Z3XQ3BIEZCI
-ENV AWS_SECRET_ACCESS_KEY=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
+
 
 RUN aws s3 cp s3://amit-automation/peddlejmeterautomation/test-scripts/ . --recursive
 
@@ -27,8 +26,6 @@ RUN chmod +x entrypoint.sh
 RUN ./entrypoint.sh
 
 FROM amazon/aws-cli AS awscli-upload
-ENV AWS_ACCESS_KEY_ID=AKIA6E3O5Z3XQ3BIEZCI
-ENV AWS_SECRET_ACCESS_KEY=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
 
 WORKDIR /app
 RUN mkdir results
