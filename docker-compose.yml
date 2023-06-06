@@ -26,13 +26,22 @@ services:
     - jmeterclidemo
 
   jmeter:
-    image: justb4/jmeter:latest
+    image: ${docker_registry-}jmeter--customimage
+    build:
+      context: .
+      dockerfile: JmeterImage/Dockerfile
     volumes: 
     - ./test-scripts:/jmeter/test-scripts
     - ./results:/jmeter/results
+    #entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
+  #jmeter:
+  #  image: justb4/jmeter:latest
+  #  volumes: 
+  #  - ./test-scripts:/jmeter/test-scripts
+  #  - ./results:/jmeter/results
 
-    entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
+  #  entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
 
-    depends_on: 
-    - jmeterclidemo
-    - ms-sql-server
+  #  depends_on: 
+  #  - jmeterclidemo
+  #  - ms-sql-server
