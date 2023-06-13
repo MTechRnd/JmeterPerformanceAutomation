@@ -25,30 +25,46 @@ services:
     depends_on:
     - jmeterclidemo
 
+  awscli:
+     image: amazon/aws-cli:latest
+     environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+     entrypoint: /app/aws-script/entrypoint.sh
+     volumes:
+      - ./aws-script:/app/aws-script
+      - test-scripts:/app/test-scripts
+      - results:/app/results
+      - flag:/app/flag
+
   jmeter:
-    image: ${docker_registry-}jmeter--customimage
-    build:
-      context: .
-      dockerfile: JmeterImage/Dockerfile
-    secrets:
-      - aws_credentials
-
-secrets:
-  aws_credentials:
-    file: aws_credentials.txt
-
-    #volumes: 
-    #- ./test-scripts:/jmeter/test-scripts
-    #- ./results:/jmeter/results
-    #entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
+    image: justb4/jmeter:latest
+    volumes: 
+    - test-scripts:/jmeter/test-scripts
+    - results:/jmeter/results
+    - flag:/jmeter/flag
+    entrypoint: "/bin/bash -c /jmeter/test-scripts/entrypoint.sh"
+    depends_on: 
+    - jmeterclidemo
+    - ms-sql-server
+    - awscli
   #jmeter:
-  #  image: justb4/jmeter:latest
+  #  image: ${DOCKER_REGISTRY-}jmetercli
+  #  build:
+  #    context: .
+  #    dockerfile: JmeterImage/Dockerfile
   #  volumes: 
-  #  - ./test-scripts:/jmeter/test-scripts
-  #  - ./results:/jmeter/results
-
-  #  entrypoint: ["sh", "-c","/jmeter/test-scripts/entrypoint.sh"]
-
+  #  - test-scripts:/jmeter/test-scripts
+  #  - results:/jmeter/results
+  #  - flag:/jmeter/flag
+  #  entrypoint: ["sh","/jmeter/test-scripts/entrypoint.sh"]
   #  depends_on: 
   #  - jmeterclidemo
   #  - ms-sql-server
+  #  - awscli
+
+volumes:
+  test-scripts:
+  results:
+  flag:
