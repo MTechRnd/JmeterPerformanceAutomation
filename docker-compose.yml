@@ -49,20 +49,6 @@ services:
     - jmeterclidemo
     - ms-sql-server
     - awscli
-  #jmeter:
-  #  image: ${DOCKER_REGISTRY-}jmetercli
-  #  build:
-  #    context: .
-  #    dockerfile: JmeterImage/Dockerfile
-  #  volumes: 
-  #  - test-scripts:/jmeter/test-scripts
-  #  - results:/jmeter/results
-  #  - flag:/jmeter/flag
-  #  entrypoint: ["sh","/jmeter/test-scripts/entrypoint.sh"]
-  #  depends_on: 
-  #  - jmeterclidemo
-  #  - ms-sql-server
-  #  - awscli
 
 volumes:
   test-scripts:
