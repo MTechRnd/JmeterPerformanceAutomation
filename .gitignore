@@ -14,4 +14,4 @@ results/
 /.gitignore
 /docker-compose.dcproj
 /docker-compose.yml
-/docker-compose.override,yml
+/docker-compose.override.yml
