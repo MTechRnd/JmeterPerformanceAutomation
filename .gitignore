@@ -7,3 +7,11 @@ dbpassword.txt/
 results/
 /JmeterCLIDemo/JmeterCLIDemo.csproj.user
 /secrets.env
+/secrets-mssql.yaml
+/secrets-aws.yaml
+/secrets-jmeterclidemo.yaml
+/.dockerignore
+/.gitignore
+/docker-compose.dcproj
+/docker-compose.yml
+/docker-compose.override,yml

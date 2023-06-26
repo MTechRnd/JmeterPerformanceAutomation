@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["JmeterCLIDemo/JmeterCLIDemo.csproj", "JmeterCLIDemo/"]
+COPY ["JmeterCLIDemo/JmeterCLIDemo.csproj", "./JmeterCLIDemo/"]
 RUN dotnet restore "JmeterCLIDemo/JmeterCLIDemo.csproj"
 COPY . .
 WORKDIR "/src/JmeterCLIDemo"
