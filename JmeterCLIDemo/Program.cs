@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -24,11 +27,12 @@ builder.Services.AddAuthentication(x =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidIssuer = config["JwtSettings:Issuer"],
-        ValidAudiences = new List<string> { "Universal", "API Gateway" },
+        ValidAudience = config["JwtSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TokenKey"))),
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
-        ValidateIssuerSigningKey = false,
+        ValidateIssuerSigningKey = true,
         ClockSkew = TimeSpan.Zero,
     };
 });
@@ -46,31 +50,31 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapPost("/GetToken", () =>
-//{
-//    var issuer = config["JwtSettings:Issuer"];
-//    var audience = config["JwtSettings:Audience"];
-//    var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TokenKey"));
-//    var tokenDiscriptor = new SecurityTokenDescriptor
-//    {
-//        Subject = new ClaimsIdentity(new[]
-//        {
-//        new Claim("Id", Guid.NewGuid().ToString()),
-//        new Claim(JwtRegisteredClaimNames.Sub, "amit"),
-//        new Claim(JwtRegisteredClaimNames.Email, "amit.limbasiya@marutitech.com"),
-//        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-//    }),
-//        Expires = DateTime.UtcNow.AddHours(1),
-//        Issuer = issuer,
-//        Audience = audience,
-//        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
-//    };
-//    var tokenHandler = new JwtSecurityTokenHandler();
-//    var token = tokenHandler.CreateToken(tokenDiscriptor);
-//    var jwttoken = tokenHandler.WriteToken(token);
-//    var stringtoken = jwttoken.ToString();
-//    return Results.Ok(stringtoken);
-//});
+app.MapPost("/GetToken", () =>
+{
+    var issuer = config["JwtSettings:Issuer"];
+    var audience = config["JwtSettings:Audience"];
+    var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("TokenKey"));
+    var tokenDiscriptor = new SecurityTokenDescriptor
+    {
+        Subject = new ClaimsIdentity(new[]
+        {
+        new Claim("Id", Guid.NewGuid().ToString()),
+        new Claim(JwtRegisteredClaimNames.Sub, "amit"),
+        new Claim(JwtRegisteredClaimNames.Email, "amit.limbasiya@marutitech.com"),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    }),
+        Expires = DateTime.UtcNow.AddHours(1),
+        Issuer = issuer,
+        Audience = audience,
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
+    };
+    var tokenHandler = new JwtSecurityTokenHandler();
+    var token = tokenHandler.CreateToken(tokenDiscriptor);
+    var jwttoken = tokenHandler.WriteToken(token);
+    var stringtoken = jwttoken.ToString();
+    return Results.Ok(stringtoken);
+});
 
 app.MapGet("/Get", async (GujaratCityDBContext _dbcontext) => await _dbcontext.GujaratDistricts.ToListAsync()).RequireAuthorization();
 
