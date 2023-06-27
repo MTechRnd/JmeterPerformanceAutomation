@@ -58,7 +58,7 @@ For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmete
 - As download_done appears to the jmeter container it will delete this file and start command executions and the jmx file it requires are present(downlaoded by awscli) in the test-scripts folder which is mounted to the test-scripts volume.
 - The results are stored in the results folder which is mounted to the results volume. After storing result and summary files in the results folder the jmeter container will create the upload_start.txt in the flag folder and then it will exit.
 - As uplaod_start.txt file appears to the awscli container, it will delete this file and upload the jmeter results and summary files (from results volume mounted to the results folder of awscli container) to the aws s3 bucket.  
-<div style="text-align:center"><img src="./flowchart.jpg" alt="Flowchart of the pub-sub approach" /></div>  
+<div align="center"><img src="./flowchart.jpg" alt="Flowchart of the pub-sub approach" /></div>  
 
 ### About JWT bearer:
 - The code for Jwt token generation is there with the /GetToken endpoint in demo api.
