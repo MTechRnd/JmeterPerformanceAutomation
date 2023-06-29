@@ -6,11 +6,11 @@
 - amazon/aws-cli image is used to download the test scripts files(.jmx files) and upload results and summary in the s3 bucket.  
 
 ### kubectl apply command:
-`kubectl apply -f k8sdeployment.yaml`  
+- `kubectl apply -f k8sdeployment.yaml`  
 This should be the command to run the create the kubernetes pods, services, PVCs and jmeter and awscli jobs. There will be the credentials needed to the mssql pod as database password, as well as aws cli pod as the access key and secret key.  
-Database password is also needed to the api pod to connect to the database.  
-There will be some changes with the connection string in appsetting.json file that is currently commented with appropriate message. The changes are with the port and the service name to connect to mssql database.  
-That changes should be done and after that `docker build -t jmeterclidemo . ` is to be run in the directory exactly where docker file is currently present when you clone this project. 
+- The secrets file secrets-aws.yaml, secrets-mssql.yaml, secrets-jmeterclidemo.yaml should be created with appropriate credentials value.  
+- Database password is also needed to the API pod to connect to the database inside the API.  
+- `docker build -t jmeterclidemo . ` is to be run in the directory exactly where docker file is currently present when you clone this project in order to get the image of the API. 
 
 ### The command for creating database and seeding data into it.
 `dotnet ef database update --connection "Server=localhost,<port>;Initial Catalog=<databasename>;User ID=<username>;Password=<Password>;TrustServerCertificate=true"`  
