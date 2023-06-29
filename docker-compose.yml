@@ -13,7 +13,7 @@ services:
       - "5001:80"
       - "5000:443"
    
-  ms-sql-server:
+  mssql-service:
     image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
     environment:
         ACCEPT_EULA: "Y"
@@ -48,7 +48,7 @@ services:
     entrypoint: "/bin/bash /jmeter/test-scripts/entrypoint.sh"
     depends_on: 
     - jmeterclidemo
-    - ms-sql-server
+    - mssql-service
     - awscli
 
 volumes:
