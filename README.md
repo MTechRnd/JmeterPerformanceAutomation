@@ -1,5 +1,5 @@
 # JmeterPerformanceAutomation
-- This is the Jmeter performance automation project. The project is dockerized and docker compose is written.   
+- This is the Jmeter performance automation project. The project is dockerized and docker compose is written as well as the kubernetes solution is also available to the dedicated folder.   
 - The database holds the location data of gujarat state and the latest and official mssql image is used to dockerized the database. And the data volume is bind mounted to get the data into the mssql table.  
 - justb4/jmeter is the unofficial image used to test the API. this is the image which contains .sh file by the help of that file we can run the command.  
 - amazon/aws-cli image is used to download the test scripts files(.jmx files) and upload results and summary in the s3 bucket.  

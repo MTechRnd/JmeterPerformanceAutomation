@@ -2,10 +2,7 @@ version: '3.4'
 
 services:
   jmeterclidemo:
-    image: ${DOCKER_REGISTRY-}jmeterclidemo
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: amit2711/jmeterperformanceautomation:latest
     environment:
         TokenKey: ${TokenKey}
         DBPassword: ${DBPassword}
@@ -15,16 +12,17 @@ services:
    
   mssql-service:
     image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
+    entrypoint: "/bin/bash /app/script/entrypoint.sh"
     environment:
         ACCEPT_EULA: "Y"
         MSSQL_SA_PASSWORD: ${DBPassword}
         MSSQL_PID: Express
     ports:
-      - "1436:1433"
+        - "1436:1433"
     volumes:
-      - ./data:/var/opt/mssql/data
+        - ./sql-script:/app/script
     depends_on:
-    - jmeterclidemo
+        - jmeterclidemo
 
   awscli:
      image: amazon/aws-cli:latest
@@ -55,4 +53,3 @@ volumes:
   test-scripts:
   results:
   flag:
-  data:

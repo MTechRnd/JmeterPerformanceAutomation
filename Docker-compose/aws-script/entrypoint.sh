@@ -1,4 +1,5 @@
 #!/bin/bash
+sleep 10
 aws s3 cp s3://qa-api-performance-automation/test-scripts/ /app/test-scripts/ --recursive
 chmod +x /app/test-scripts/entrypoint.sh
 echo "Files downloaded successfully..."
