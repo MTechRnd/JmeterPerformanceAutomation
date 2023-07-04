@@ -4,15 +4,20 @@
 - justb4/jmeter is the unofficial image used to test the API. this is the image which contains .sh file by the help of that file we can run the command.  
 - amazon/aws-cli image is used to download the test scripts files(.jmx files) and upload results and summary in the s3 bucket.  
 
-### Docker-compose up command:
+### Steps to follow to run in docker-compose
+1. Clone the project.
+2. Make one env file named as secrets.env.
+3. Declare the environment variable DBPassword, TokenKey, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_DEFAULT_REGION with appropriate values in the same directory as docker-compose.yml.
+4. Open the command prompt and navigate to Docker-compose folder and Run the following command.   
 `docker-compose --env-file secrets.env up`  
-This should be the command to run the docker containers. Here the credentials are come from the secrets.env file so we have to specify it in the command.  
 
-### The command for creating database and seeding data into it.
-`dotnet ef database update --connection "Server=localhost,<port>;Initial Catalog=<databasename>;User ID=<username>;Password=<Password>;TrustServerCertificate=true"`  
-- when the command is run, the migration files are already there in the migration folder, so it will apply those pending migration. So it will create the database and table.  
-- Also it will seed the data of gujarat state's district data containing 232 rows.  
-* port: this is the local machine port which is binded to the mssql server container. we have binded it to 1436.  
+### Steps to follow to run in kubernetes.
+1. Clone the project.
+2. The secrets file secrets-aws.yaml, secrets-mssql.yaml, secrets-jmeterclidemo.yaml should be created with appropriate credentials value.  
+3. Change the configmap script according to your requirement.
+4. Apply all the secrets and config map with `kubectl apply -f <filename>`. 
+5. Open the command prompt and navigate to Docker-compose folder and Run the following command.   
+`kubectl apply -f k8sdeployment.yaml` 
 
 ### Options to configure the Jmeter command for test:
 * Jusers : Represents the number of users/threads.
