@@ -1,5 +1,5 @@
 IF NOT EXISTS (SELECT name FROM master.sys.databases where name = 'ODataAPIDatabase')
-
+	CREATE DATABASE ODataAPIDatabase
 	IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
 	begin
 	EXEC [ODataAPIDatabase].[dbo].[sp_fulltext_database] @action = 'enable'

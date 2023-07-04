@@ -116,7 +116,7 @@ kind: CronJob
 metadata:
   name: jmeter
 spec:
-  schedule: "45 * * * *"
+  schedule: "55 * * * *"
   jobTemplate:
     spec:
       backoffLimit: 3
@@ -127,7 +127,7 @@ spec:
           containers:
             - command:
                 - /bin/bash
-                - /jmeter/test-scripts/entrypoint.sh
+                - /jmeter/jmeter-script/entrypoint.sh
               image: justb4/jmeter:latest
               imagePullPolicy: Never 
               name: jmeter
@@ -138,6 +138,8 @@ spec:
                   name: results
                 - mountPath: /jmeter/flag
                   name: flag
+                - mountPath: /jmeter/jmeter-script
+                  name: jmeter-script
           volumes:
             - name: test-scripts
               persistentVolumeClaim:
@@ -148,6 +150,10 @@ spec:
             - name: flag
               persistentVolumeClaim:
                 claimName: flag
+            - name: jmeter-script
+              configMap:
+                name: jmeter-script
+                defaultMode: 0777
 status: {}
 ---
 # AWS cli job and pvc
@@ -156,7 +162,7 @@ kind: CronJob
 metadata:
   name: awscli
 spec:
-  schedule: "40 * * * *"
+  schedule: "50 * * * *"
   jobTemplate:
     spec:
       backoffLimit: 3

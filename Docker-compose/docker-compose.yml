@@ -39,10 +39,11 @@ services:
   jmeter:
     image: justb4/jmeter:latest
     volumes: 
+    - ./jmeter-script:/jmeter/jmeter-script
     - test-scripts:/jmeter/test-scripts
     - results:/jmeter/results
     - flag:/jmeter/flag
-    entrypoint: "/bin/bash /jmeter/test-scripts/entrypoint.sh"
+    entrypoint: "/bin/bash /jmeter/jmeter-script/entrypoint.sh"
     depends_on: 
     - jmeterclidemo
     - mssql-service
