@@ -15,8 +15,8 @@
 1. Clone the project.
 2. The secrets file secrets-aws.yaml, secrets-mssql.yaml, secrets-jmeterclidemo.yaml should be created with appropriate credentials value.  
 3. Change the configmap script according to your requirement.
-4. Apply all the secrets and config map with `kubectl apply -f <filename>`. 
-5. Open the command prompt and navigate to Docker-compose folder and Run the following command.   
+4. Open the command prompt and navigate to k8s folder and Apply all the secrets and config map with `kubectl apply -f <filename>`. 
+5. Then Run the following command.   
 `kubectl apply -f k8sdeployment.yaml` 
 
 ### Options to configure the Jmeter command for test:
