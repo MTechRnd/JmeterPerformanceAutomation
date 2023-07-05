@@ -64,7 +64,7 @@ For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmete
 - When we request to this endpoint it will return us the token with all the configuration and the token expiry date is 1 hour. which is set in the code.  
 - All the test files(.jmx files) have one setup thread group which runs only once per jmx file. It will request to the /GetToken endpoint and get the token. Then it will extract and store the token value to the props.
 - The main testing thread group will get this token value from the props and pass it in the header manager with authorization header attribute.
-- Note: The authorization attribute value must be like Bearer <token-value>. i.e. Bearer<space><token-value>. If it is not, then it can not parse the bearer token value and will give error as unauthorized.  
+- Note: The authorization attribute value must be like Bearer \<token-value\>. i.e. Bearer\<space\>\<token-value\>. If it is not, then it can not parse the bearer token value and will give error as unauthorized.  
 
 ## Tested command for examples
 ### Get By ID command:
