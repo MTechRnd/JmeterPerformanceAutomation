@@ -1,29 +1,27 @@
 version: '3.4'
-
 services:
   jmeterclidemo:
-    image: ${DOCKER_REGISTRY-}jmeterclidemo
-    build:
-      context: .
-      dockerfile: JmeterCLIDemo/Dockerfile
+    image: amit2711/jmeterperformanceautomation:latest
+    environment:
+        TokenKey: ${TokenKey}
+        DBPassword: ${DBPassword}
     ports:
       - "5001:80"
       - "5000:443"
    
-  ms-sql-server:
+  mssql-service:
     image: mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
-    env_file: secrets.env
+    entrypoint: "/bin/bash /app/script/entrypoint.sh"
     environment:
         ACCEPT_EULA: "Y"
         MSSQL_SA_PASSWORD: ${DBPassword}
         MSSQL_PID: Express
     ports:
-      - "1436:1433"
+        - "1436:1433"
     volumes:
-      - ./data:/var/opt/mssql/data
-      - ./log:/var/opt/mssql/log
+        - ./sql-script:/app/script
     depends_on:
-    - jmeterclidemo
+        - jmeterclidemo
 
   awscli:
      image: amazon/aws-cli:latest
@@ -31,7 +29,7 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-     entrypoint: /app/aws-script/entrypoint.sh
+     entrypoint:  /app/aws-script/entrypoint.sh
      volumes:
       - ./aws-script:/app/aws-script
       - test-scripts:/app/test-scripts
@@ -41,13 +39,14 @@ services:
   jmeter:
     image: justb4/jmeter:latest
     volumes: 
+    - ./jmeter-script:/jmeter/jmeter-script
     - test-scripts:/jmeter/test-scripts
     - results:/jmeter/results
     - flag:/jmeter/flag
-    entrypoint: "/bin/bash -c /jmeter/test-scripts/entrypoint.sh"
+    entrypoint: "/bin/bash /jmeter/jmeter-script/entrypoint.sh"
     depends_on: 
     - jmeterclidemo
-    - ms-sql-server
+    - mssql-service
     - awscli
 
 volumes:

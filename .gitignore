@@ -1,9 +1,0 @@
-/.vs/
-bin/
-data/
-obj/
-log/
-dbpassword.txt/
-results/
-/JmeterCLIDemo/JmeterCLIDemo.csproj.user
-/secrets.env
