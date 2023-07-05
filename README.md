@@ -15,8 +15,8 @@
 1. Clone the project.
 2. The secrets file secrets-aws.yaml, secrets-mssql.yaml, secrets-jmeterclidemo.yaml should be created with appropriate credentials value.  
 3. Change the configmap script according to your requirement.
-4. Apply all the secrets and config map with `kubectl apply -f <filename>`. 
-5. Open the command prompt and navigate to Docker-compose folder and Run the following command.   
+4. Open the command prompt and navigate to k8s folder and Apply all the secrets and config map with `kubectl apply -f <filename>`. 
+5. Then Run the following command in that directory.   
 `kubectl apply -f k8sdeployment.yaml` 
 
 ### Options to configure the Jmeter command for test:
@@ -64,7 +64,7 @@ For more information visit: https://www.toolsqa.com/jmeter/thread-group-in-jmete
 - When we request to this endpoint it will return us the token with all the configuration and the token expiry date is 1 hour. which is set in the code.  
 - All the test files(.jmx files) have one setup thread group which runs only once per jmx file. It will request to the /GetToken endpoint and get the token. Then it will extract and store the token value to the props.
 - The main testing thread group will get this token value from the props and pass it in the header manager with authorization header attribute.
-- Note: The authorization attribute value must be like Bearer <token-value>. i.e. Bearer<space><token-value>. If it is not, then it can not parse the bearer token value and will give error as unauthorized.  
+- Note: The authorization attribute value must be like Bearer \<token-value\>. i.e. Bearer\<space\>\<token-value\>. If it is not, then it can not parse the bearer token value and will give error as unauthorized.  
 
 ## Tested command for examples
 ### Get By ID command:
